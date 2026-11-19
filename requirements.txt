@@ -1,37 +1,19 @@
-# Core framework & API
+# FastAPI runtime dependencies. The CPU wheel avoids CUDA libraries in Vercel bundles.
+--extra-index-url https://download.pytorch.org/whl/cpu
 fastapi
 uvicorn
-
-# Data & ETL
+python-multipart
 pandas
+numpy
 sqlalchemy
-alembic
 python-dotenv
 scikit-learn
+joblib
 psycopg[binary]
-
-# RAG (embeddings + retrieval)
-langchain
+pydantic
+langchain-groq
+langchain-core
 faiss-cpu
 sentence-transformers
-langchain-groq 
-groq 
-tqdm 
-langchain-community
-langchain-core 
-langchain-text-splitters
-langchain-huggingface
-
-# UI (optional frontend)
-streamlit
-
-# Testing
-pytest
-requests
-plotly
-
-# Utilities & logging
-structlog
-loguru
-langsmith
-guardrails-ai
+torch==2.7.1+cpu; python_version < "3.14"
+torch; python_version >= "3.14"
