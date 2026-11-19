@@ -31,6 +31,7 @@ if loaded_app is not None and not hasattr(loaded_app, '__path__'):
     sys.modules.pop('app', None)
 
 import streamlit as st
+from streamlit.errors import StreamlitSecretNotFoundError
 
 import pandas as pd
 
@@ -84,9 +85,16 @@ from app.cost_intelligence import (
 
 # ──────────────────────────────────────────────
 
-API_BASE_URL = os.getenv(
-    "API_BASE_URL",
-    os.getenv("API_URL", "http://localhost:8000"),
+try:
+    api_base_url = st.secrets.get("API_BASE_URL")
+except StreamlitSecretNotFoundError:
+    api_base_url = None
+
+API_BASE_URL = (
+    api_base_url
+    or os.getenv("API_BASE_URL")
+    or os.getenv("API_URL")
+    or "http://localhost:8000"
 ).rstrip("/")
 
 COLORS = {
