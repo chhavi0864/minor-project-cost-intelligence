@@ -33,6 +33,14 @@ if loaded_app is not None and not hasattr(loaded_app, '__path__'):
 import streamlit as st
 from streamlit.errors import StreamlitSecretNotFoundError
 
+if not os.getenv("DATABASE_URL"):
+    try:
+        database_url = st.secrets.get("DATABASE_URL")
+    except StreamlitSecretNotFoundError:
+        database_url = None
+    if database_url:
+        os.environ["DATABASE_URL"] = database_url
+
 import pandas as pd
 
 import plotly.express as px
