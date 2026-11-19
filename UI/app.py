@@ -33,13 +33,19 @@ if loaded_app is not None and not hasattr(loaded_app, '__path__'):
 import streamlit as st
 from streamlit.errors import StreamlitSecretNotFoundError
 
-if not os.getenv("DATABASE_URL"):
+database_url = os.getenv("DATABASE_URL")
+if not database_url:
     try:
         database_url = st.secrets.get("DATABASE_URL")
     except StreamlitSecretNotFoundError:
         database_url = None
-    if database_url:
-        os.environ["DATABASE_URL"] = database_url
+if database_url:
+    if database_url.startswith("postgres://"):
+        database_url = "postgresql+psycopg://" + database_url[len("postgres://"):]
+    elif database_url.startswith("postgresql://"):
+        database_url = "postgresql+psycopg://" + database_url[len("postgresql://"):]
+    os.environ["DATABASE_URL"] = database_url
+DATABASE_URL_CONFIGURED = bool(database_url)
 
 import pandas as pd
 
@@ -102,7 +108,7 @@ API_BASE_URL = (
     api_base_url
     or os.getenv("API_BASE_URL")
     or os.getenv("API_URL")
-    or "http://localhost:8000"
+    or ""
 ).rstrip("/")
 
 COLORS = {
@@ -164,6 +170,13 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 
 )
+
+if not DATABASE_URL_CONFIGURED and not (PROJECT_ROOT / "data" / "billing.db").is_file():
+    st.error("Configure DATABASE_URL in Streamlit app secrets to connect to Supabase PostgreSQL.")
+    st.stop()
+
+if not API_BASE_URL:
+    st.warning("Configure API_BASE_URL in Streamlit app secrets to connect to the Cloud Compass API.")
 
 # ──────────────────────────────────────────────
 
