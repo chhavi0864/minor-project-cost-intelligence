@@ -11,6 +11,12 @@ import app.rag_qa as rag_qa
 ROOT = Path(__file__).resolve().parent.parent
 
 
+def test_rag_type_annotations_resolve():
+    from typing import get_type_hints
+
+    assert "return" in get_type_hints(rag_qa.fetch_active_dataset_context)
+
+
 def test_dashboard_kpis_and_anomaly_button(monkeypatch):
     calls = []
 
