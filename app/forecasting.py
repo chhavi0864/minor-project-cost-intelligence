@@ -1,4 +1,4 @@
-"""Cloud Cost Forecasting Module for FinOps-Copilot.
+"""Cloud Compass cloud cost forecasting module.
 
 Provides production forecasting using Prophet-Architecture Generalized Additive Model
 (GAM) with trend, weekly Fourier seasonality, weekend indicators, and uncertainty intervals.

@@ -21,8 +21,8 @@ from app.cost_intelligence import (
 )
 
 app = FastAPI(
-    title="FinOps API",
-    description="Cost management and optimization API with RAG-powered insights",
+    title="Cloud Compass API",
+    description="Cloud cost intelligence and optimization API with FinOps and RAG-powered insights",
     version="1.0.0"
 )
 

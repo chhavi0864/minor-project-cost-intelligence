@@ -1,6 +1,6 @@
 """
 Universal Cloud Cost CSV Processing & Ingestion System (Phase 1)
-Supports FOCUS 1.0, Legacy FinOps-Copilot CSVs, and Custom Mapped Cloud Billing Exports.
+Supports FOCUS 1.0, legacy FinOps CSVs, and custom-mapped cloud billing exports.
 Industry-independent, multi-cloud compatible (AWS, Azure, GCP, OCI).
 """
 

@@ -1,16 +1,16 @@
-# 🌩️ AI-driven Cloud Cost Copilot (FinOps Assistant)
+# Cloud Compass — AI-Powered Cloud Cost Intelligence & Optimization
 
 ---
 
 ## 📌 Overview
-**The FinOps Assistant is an AI-driven cloud cost analytics platform designed to help organizations monitor, analyze, and optimize their cloud spending.**
+**Cloud Compass is an AI-powered cloud cost intelligence platform designed to help organizations monitor, analyze, and optimize their cloud spending using FinOps practices.**
 It provides:
 - End-to-end pipeline: ETL → KPIs → RAG → Recommendations → API → UI
 - KPI dashboards to analyze cost trends
 - Natural-language Q&A over your cost data and FinOps documentation
 - Actionable recommendations to reduce costs
 
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jasoncobra3/FinOps-Copilot)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/chhavi0864/minor-project-cost-intelligence)
   
 ---
 

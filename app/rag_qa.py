@@ -1,5 +1,5 @@
 """
-FinOps Copilot - RAG Question Answering
+Cloud Compass - RAG Question Answering
 Uses FAISS retrieval, LangChain, and Groq LLM with grounded fallback.
 
 Requirements:
@@ -36,8 +36,8 @@ DEFAULT_GROQ_MODEL = "openai/gpt-oss-20b"
 # ---------------------------------------------------------
 
 SYSTEM_PROMPT = """
-You are an AI-powered FinOps assistant specializing in
-cloud cost analysis, optimization, and resource management.
+You are the Cloud Compass AI assistant, specializing in
+FinOps, cloud cost analysis, optimization, and resource management.
 
 Your responsibilities include:
 

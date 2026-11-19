@@ -1,6 +1,6 @@
 """
 
-FinOps Intelligence — AI-Powered Cloud Cost Analytics & Optimization Platform
+Cloud Compass — AI-Powered Cloud Cost Intelligence & Optimization
 
 Modern, Industry-Independent Cloud Cost Intelligence Dashboard (Phase 1).
 
@@ -139,7 +139,7 @@ CHART_PALETTE = ["#3B82F6", "#8B5CF6", "#10B981", "#F59E0B", "#EF4444", "#06B6D4
 
 st.set_page_config(
 
-    page_title="FinOps Intelligence",
+    page_title="Cloud Compass",
 
     page_icon="⚡",
 
@@ -471,7 +471,7 @@ def _sync_dataset_scope(widget_key: str, batch_map: Dict[str, Optional[str]]) ->
 
 with st.sidebar:
 
-    st.title("⚡ FinOps Intelligence")
+    st.title("⚡ Cloud Compass")
     st.caption("AI-Powered Cloud Cost Analytics & Optimization")
 
     _section_label("Navigation")

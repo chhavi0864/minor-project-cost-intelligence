@@ -7,6 +7,8 @@ pandas
 sqlalchemy
 alembic
 python-dotenv
+scikit-learn
+psycopg[binary]
 
 # RAG (embeddings + retrieval)
 langchain

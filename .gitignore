@@ -26,3 +26,4 @@ data/*.sqlite3
 *.npy
 *.faiss
 .tmp_mpl/
+.vercel/
