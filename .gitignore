@@ -17,7 +17,8 @@ data/features/
 data/models/
 data/cache/
 data/exports/
-data/faiss/
+data/faiss/*.faiss
+data/faiss/*.npy
 data/*.db
 data/*.sqlite
 data/*.sqlite3
