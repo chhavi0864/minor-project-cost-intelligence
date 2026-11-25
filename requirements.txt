@@ -1,5 +1,4 @@
-# FastAPI runtime dependencies. The CPU wheel avoids CUDA libraries in Vercel bundles.
---extra-index-url https://download.pytorch.org/whl/cpu
+# FastAPI runtime dependencies (lightweight TF-IDF retrieval for Vercel 500 MB limit).
 fastapi
 uvicorn
 python-multipart
@@ -13,7 +12,3 @@ psycopg[binary]
 pydantic
 langchain-groq
 langchain-core
-faiss-cpu
-sentence-transformers
-torch==2.7.1+cpu; python_version < "3.14"
-torch; python_version >= "3.14"

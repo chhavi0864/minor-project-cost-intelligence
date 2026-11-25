@@ -66,13 +66,44 @@ def _embed_query(query):
     emb = emb / (np.linalg.norm(emb, axis=1, keepdims=True) + 1e-12)
     return emb.astype("float32")
 
+_tfidf_vectorizer = None
+_tfidf_matrix = None
+
+def _retrieve_tfidf(query, meta, top_k=5):
+    """Lightweight TF-IDF + cosine similarity fallback over meta.json chunks."""
+    global _tfidf_vectorizer, _tfidf_matrix
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+
+    if _tfidf_vectorizer is None or _tfidf_matrix is None:
+        texts = [item.get("text", "") for item in meta]
+        _tfidf_vectorizer = TfidfVectorizer(stop_words="english")
+        _tfidf_matrix = _tfidf_vectorizer.fit_transform(texts)
+
+    q_vec = _tfidf_vectorizer.transform([query])
+    sims = cosine_similarity(q_vec, _tfidf_matrix).flatten()
+    top_indices = np.argsort(sims)[::-1][:top_k]
+    return [
+        {
+            "id": meta[idx].get("id"),
+            "score": float(sims[idx]),
+            "text": meta[idx].get("text"),
+            "meta": meta[idx].get("meta"),
+        }
+        for idx in top_indices
+        if 0 <= idx < len(meta)
+    ]
+
 def retrieve(query, top_k=5):
     """
     Returns a list of dicts: {id, score, text, meta}
-    Uses FAISS if available; seamlessly falls back to exact numpy dot product.
+    Uses FAISS/embeddings if sentence_transformers is available; otherwise falls back to TF-IDF.
     """
     index, meta = load_index_and_meta()
-    q_emb = _embed_query(query)
+    try:
+        q_emb = _embed_query(query)
+    except ImportError:
+        return _retrieve_tfidf(query, meta, top_k=top_k)
     
     if index is not None:
         try:
