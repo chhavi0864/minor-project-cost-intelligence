@@ -189,12 +189,12 @@ async def ask(req: AskRequest):
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
 
-        # Check if FAISS index exists (resolved relative to repo root, not CWD)
+        # Check if knowledge-base meta.json exists (resolved relative to repo root, not CWD)
         faiss_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "faiss")
-        if not os.path.exists(os.path.join(faiss_dir, "index.faiss")) or not os.path.exists(os.path.join(faiss_dir, "meta.json")):
+        if not os.path.exists(os.path.join(faiss_dir, "meta.json")):
             raise HTTPException(
                 status_code=500,
-                detail="FAISS index not found. Please run 'python scripts/build_faiss_index.py' first."
+                detail="Knowledge base meta.json not found. Please run 'python scripts/build_faiss_index.py' first."
             )
             
         res = await rag_answer(
