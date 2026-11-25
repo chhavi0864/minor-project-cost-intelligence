@@ -18,16 +18,17 @@ os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_NAME = "all-MiniLM-L6-v2"
-INDEX_PATH = Path("data/faiss/index.faiss")
-META_PATH = Path("data/faiss/meta.json")
+INDEX_PATH = BASE_DIR / "data" / "faiss" / "index.faiss"
+META_PATH = BASE_DIR / "data" / "faiss" / "meta.json"
 
 # lazy load
 _index = None
 _meta = None
 _model = None
 
-EMB_PATH = Path("data/faiss/embeddings.npy")
+EMB_PATH = BASE_DIR / "data" / "faiss" / "embeddings.npy"
 _embeddings = None
 
 def _load_model():
