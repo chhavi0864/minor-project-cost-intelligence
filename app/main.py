@@ -28,6 +28,25 @@ app = FastAPI(
 
 # No monitoring setup or middleware needed
 
+@app.get("/debug-rag")
+def debug_rag():
+    """Diagnostic: returns the computed meta.json path and whether it exists."""
+    import glob
+    this_file = os.path.abspath(__file__)
+    repo_root = os.path.dirname(os.path.dirname(this_file))
+    meta_path = os.path.join(repo_root, "data", "faiss", "meta.json")
+    # Also scan /var/task for the file
+    found_in = glob.glob("/var/task/**/meta.json", recursive=True) if os.path.exists("/var/task") else []
+    cwd_found = glob.glob(os.path.join(os.getcwd(), "**", "meta.json"), recursive=True)
+    return {
+        "__file__": this_file,
+        "repo_root": repo_root,
+        "meta_path": meta_path,
+        "meta_exists": os.path.exists(meta_path),
+        "cwd": os.getcwd(),
+        "found_at": found_in + cwd_found,
+    }
+
 @app.get("/kpi")
 def get_kpis(
     month: str = Query(..., description="Month in YYYY-MM format"),
@@ -191,10 +210,11 @@ async def ask(req: AskRequest):
 
         # Check if knowledge-base meta.json exists (resolved relative to repo root, not CWD)
         faiss_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "faiss")
-        if not os.path.exists(os.path.join(faiss_dir, "meta.json")):
+        meta_path = os.path.join(faiss_dir, "meta.json")
+        if not os.path.exists(meta_path):
             raise HTTPException(
                 status_code=500,
-                detail="Knowledge base meta.json not found. Please run 'python scripts/build_faiss_index.py' first."
+                detail=f"Knowledge base meta.json not found at: {meta_path}"
             )
             
         res = await rag_answer(
